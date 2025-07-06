@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASTRA ✨ - Your Intelligent Digital Companion</title>
+
+    <link rel="icon" href="assets/title-bar.png" type="image/png">
+    <link rel="shortcut icon" href="assets/title-bar.png" type="image/png">
+
+    <meta name="title" content="ASTRA ✨ - Your Intelligent Digital Companion">
+    <meta name="description" content="Meet ASTRA: Your AI-powered MCP server for smart trip planning, email automation, scheduling, and more. Always Adapting, Always Ahead.">
+    <meta name="keywords" content="ASTRA, AI, MCP server, artificial intelligence, trip planning, email automation, smart scheduling, task management, digital companion, productivity, automation, RamBikkina">
+    <meta name="author" content="RamBikkina">
+    <meta name="robots" content="index, follow"> <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ramc26.github.io/RamTechSuite/ASTRA"> <meta property="og:title" content="ASTRA ✨ - Your Intelligent Digital Companion">
+    <meta property="og:description" content="Meet ASTRA: Your AI-powered MCP server for smart trip planning, email automation, scheduling, and more. Always Adapting, Always Ahead.">
+    <meta property="og:image" content="assets/social-share-image.jpg"> <meta property="og:image:alt" content="ASTRA AI Logo with futuristic background">
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://ramc26.github.io/RamTechSuite/ASTRA"> <meta property="twitter:title" content="ASTRA ✨ - Your Intelligent Digital Companion">
+    <meta property="twitter:description" content="Meet ASTRA: Your AI-powered MCP server for smart trip planning, email automation, scheduling, and more. Always Adapting, Always Ahead.">
+    <meta property="twitter:image" content="assets/social-share-image.jpg"> <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <style>
+        /* Font Face Rule for tapem.ttf */
+        @font-face {
+            font-family: 'TapemFont'; /* This is the name you'll use in your CSS */
+            src: url('assets/tapem.ttf') format('truetype'); /* Path to your font file */
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap; /* Improves performance by displaying text with a fallback font until the custom font is loaded */
+        }
+
+        :root {
+            --primary: #0a0a2a;
+            --secondary: #1a1a4a;
+            --accent: #00c6ff;
+            --accent2: #7a00ff;
+            --neutral: #f5f7fa; /* Lightest color for text on dark backgrounds, and light section backgrounds */
+            --text: #2d3748; /* Dark text for light backgrounds */
+            --light-bg: rgba(245, 247, 250, 0.95); /* Near white background for sections */
+            --card-bg: rgba(255, 255, 255, 0.98); /* White background for cards */
+
+            /* New Modal Colors */
+            --modal-bg-light: #ffffff; /* Pure white for clean look */
+            --modal-border-light: rgba(0, 0, 0, 0.08); /* Subtle border */
+            --modal-text-dark: var(--secondary); /* Dark text for contrast */
+            --modal-input-border: #e0e0e0;
+            --modal-input-focus: var(--accent);
+            --modal-placeholder: #a0a0a0;
+
+            /* New Footer Colors */
+            --ivory-color: #FFFFF0; /* Added ivory color */
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--primary);
+            color: var(--text); /* Default text color for sections on light backgrounds */
+            font-family: 'Open Sans', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* --- Fonts --- */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+        }
+
+        .hero h1 {
+            font-weight: 700;
+        }
+
+        .feature-title {
+            font-weight: 600;
+        }
+
+        /* --- 3D Background Canvas --- */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        /* --- Preloader --- */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .preloader-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-top: 4px solid var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* --- Layout --- */
+        .container-fluid {
+            max-width: 1400px;
+            padding: 0 30px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-padding {
+            padding: 100px 0;
+        }
+
+        /* --- Navigation --- */
+        .navbar {
+            padding-top: 1.5rem;
+            background: rgba(10, 10, 42, 0.5); /* Semi-transparent dark background */
+            backdrop-filter: blur(10px);
+        }
+
+        .navbar-brand {
+            font-family: 'TapemFont', sans-serif; /* Applied custom font */
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: var(--neutral) !important;
+            letter-spacing: 1.5px;
+        }
+
+        .navbar-brand .accent {
+            color: var(--accent);
+        }
+
+        .nav-link {
+            color: rgba(245, 247, 250, 0.9) !important; /* Lighter text for navigation */
+            transition: color 0.3s;
+            font-weight: 500;
+            font-family: 'Poppins', sans-serif;
+            margin: 0 10px;
+        }
+        .nav-link:hover {
+            color: var(--accent) !important;
+        }
+
+        .nav-btn {
+            background: linear-gradient(45deg, var(--accent), var(--accent2));
+            border: none; /* Removed border */
+            border-radius: 30px;
+            padding: 8px 20px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            color: var(--neutral); /* Text color for button */
+        }
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 198, 255, 0.4);
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            padding: 140px 0 80px;
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            color: var(--neutral); /* Text color for hero section */
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+
+        .hero h1 {
+            font-size: 3.8rem;
+            font-family: 'TapemFont', sans-serif;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            background: linear-gradient(to right, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            color: var(--neutral);
+            margin-bottom: 2.5rem;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: rgba(245, 247, 250, 0.8);
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        .btn-astra {
+            background: linear-gradient(45deg, var(--accent), var(--accent2));
+            border: none;
+            border-radius: 30px;
+            padding: 14px 36px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 198, 255, 0.4);
+            font-size: 1.1rem;
+            color: var(--neutral); /* Button text color */
+        }
+
+        .btn-astra:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 198, 255, 0.6);
+        }
+
+        /* --- Features Section --- */
+        .features {
+            background-color: var(--light-bg); /* Light background for the features section */
+            border-radius: 30px;
+            padding: 70px 40px;
+            margin: 40px 0;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .section-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.4rem;
+            margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+            color: var(--text); /* Dark text for section titles */
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(45deg, var(--accent), var(--accent2));
+            border-radius: 2px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature-card {
+            background: var(--card-bg); /* White-ish background for feature cards */
+            border-radius: 20px;
+            padding: 35px;
+            height: 100%;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            font-size: 30px;
+            color: white;
+        }
+
+        .feature-title {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--secondary); /* Darker text for feature titles */
+        }
+
+        .feature-card p {
+            margin-bottom: 20px;
+            color: var(--text);
+            flex-grow: 1;
+        }
+
+        /* --- How It Works --- */
+        .how-it-works {
+            padding: 100px 0;
+            position: relative;
+            text-align: center; /* Center content */
+        }
+
+        .how-it-works .section-title {
+            color: var(--neutral); /* Light text for section title */
+            margin: 0 auto 3rem; /* Center and add bottom margin */
+        }
+
+        .how-it-works .lead {
+            color: rgba(245, 247, 250, 0.8); /* Light text for lead paragraph */
+            margin-bottom: 50px;
+        }
+
+        .steps-container {
+            display: flex;
+            justify-content: center; /* Center the steps horizontally */
+            flex-wrap: wrap;
+            margin-top: 50px;
+        }
+
+        .step {
+            flex: 0 0 calc(25% - 30px);
+            max-width: 280px; /* Limit step width */
+            text-align: center;
+            padding: 30px 15px; /* Adjust padding */
+            position: relative;
+            margin: 0 15px 40px; /* Adjust margin for spacing */
+            color: var(--neutral); /* Light text for step description */
+        }
+
+        .step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 50px; /* Adjust vertical position */
+            right: -40px;
+            width: 40px;
+            height: 2px;
+            background: var(--accent);
+            opacity: 0.5;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--accent), var(--accent2));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: white;
+        }
+
+        .step h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--neutral);
+        }
+
+        .step p {
+            color: rgba(245, 247, 250, 0.8);
+        }
+
+        /* --- CTA Section --- */
+        .cta-section {
+            padding: 120px 0;
+            text-align: center;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            border-radius: 30px;
+            margin: 80px auto; /* Center the section */
+            max-width: 1200px; /* Limit max-width */
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+            color: white; /* Default text color for CTA section */
+        }
+
+        .cta-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cta-title {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .cta-text {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+        }
+
+        .btn-light {
+            background: white;
+            border: none;
+            border-radius: 30px;
+            padding: 14px 36px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            color: var(--secondary); /* Text color for light button */
+        }
+
+        .btn-light:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.3);
+        }
+
+        /* --- Footer --- */
+        .footer {
+            padding: 70px 0 30px;
+            color: rgba(245, 247, 250, 0.7);
+        }
+
+        .footer-logo {
+            font-family: 'TapemFont', sans-serif; /* Applied custom font */
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--neutral);
+        }
+
+        .footer-logo .accent {
+            color: var(--accent);
+        }
+
+        .footer-subtitle {
+            font-size: 1.1rem;
+            max-width: 300px;
+            margin-bottom: 30px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .footer-links a {
+            color: rgba(245, 247, 250, 0.7);
+            margin-bottom: 12px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .copyright {
+            border-top: 1px solid rgba(245, 247, 250, 0.1);
+            padding-top: 30px;
+            margin-top: 50px;
+            text-align: center;
+            font-size: 0.9rem;
+            line-height: 1.6; /* Adjusted line height to be slightly smaller */
+        }
+
+        .developer-credit {
+            color: var(--neutral);
+            font-size: 1rem; /* Slightly smaller for compactness */
+            font-weight: 500;
+            margin-top: 5px; /* Less spacing */
+        }
+        .developer-name {
+            color: var(--ivory-color);
+            font-weight: 700;
+            font-size: 1.05rem; /* Slightly smaller for compactness */
+            letter-spacing: 0.2px; /* Reduced spacing */
+        }
+        .developer-role {
+            font-weight: 600;
+            color: var(--accent);
+        }
+        .portfolio-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+            white-space: nowrap; /* Keep link on one line if possible */
+        }
+        .portfolio-link:hover {
+            color: var(--accent2);
+            text-decoration: underline;
+        }
+
+        /* --- Modal Styling --- */
+        .modal-content {
+            background-color: var(--modal-bg-light); /* Pure white background */
+            border-radius: 25px; /* More rounded corners */
+            border: 1px solid var(--modal-border-light);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15); /* Stronger, softer shadow */
+            color: var(--modal-text-dark); /* Dark text for contrast */
+            padding: 20px 10px; /* Internal padding */
+        }
+        .modal-header {
+            border-bottom: none; /* No border for a cleaner look */
+            padding: 1.5rem 2rem 0; /* Adjust padding */
+            position: relative;
+        }
+        .modal-title {
+            color: var(--secondary); /* Darker title color */
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700; /* Bolder title */
+            font-size: 2rem; /* Larger title */
+            text-align: center;
+            width: 100%;
+        }
+        .modal-body {
+            padding: 1.5rem 2.5rem 2.5rem; /* More padding for spacious feel */
+        }
+        .modal-footer {
+            border-top: none; /* No border */
+            padding-top: 0;
+            justify-content: center; /* Center content in footer */
+            flex-direction: column; /* Stack elements */
+            gap: 10px;
+        }
+        .modal-header .btn-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--modal-text-dark); /* Dark close button */
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+        }
+        .modal-header .btn-close:hover {
+            opacity: 1;
+        }
+        .form-label {
+            color: var(--text); /* Dark text for labels */
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 600; /* Slightly bolder labels */
+            margin-bottom: 8px;
+        }
+        .form-control {
+            background-color: #f8f8f8; /* Very light grey for input background */
+            border: 1px solid var(--modal-input-border);
+            color: var(--modal-text-dark);
+            border-radius: 12px; /* More rounded inputs */
+            padding: 14px 20px; /* More generous padding */
+            font-size: 1.05rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .form-control:focus {
+            background-color: #ffffff; /* White on focus */
+            border-color: var(--modal-input-focus);
+            box-shadow: 0 0 0 0.25rem rgba(0, 198, 255, 0.15); /* Lighter shadow for focus */
+            color: var(--modal-text-dark);
+        }
+        .form-control::placeholder {
+            color: var(--modal-placeholder);
+            opacity: 1; /* Ensure placeholder is visible */
+        }
+        textarea.form-control {
+            min-height: 120px; /* Taller textarea */
+            resize: vertical;
+        }
+        .btn-schedule-demo {
+            background: linear-gradient(45deg, var(--accent), var(--accent2));
+            border: none;
+            border-radius: 35px; /* Even more rounded */
+            padding: 16px 40px; /* Larger button */
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 198, 255, 0.3); /* Stronger initial shadow */
+            font-size: 1.1rem;
+            color: white; /* White text for button */
+            width: auto; /* Allow button to size naturally, or set max-width */
+            min-width: 200px;
+            margin-top: 25px; /* More spacing */
+        }
+        .btn-schedule-demo:hover {
+            transform: translateY(-4px); /* More pronounced lift */
+            box-shadow: 0 12px 30px rgba(0, 198, 255, 0.5); /* Enhanced hover shadow */
+        }
+        #result {
+            margin-top: 15px;
+            font-size: 1rem;
+            text-align: center;
+            font-weight: 500;
+            color: var(--secondary); /* Darker text for result */
+        }
+
+        /* --- New modal specific text styles --- */
+        .modal-body p {
+            color: var(--text); /* Dark text for body paragraph */
+            font-size: 1.1rem;
+            text-align: center;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+        .modal-footer .privacy-text {
+            font-size: 0.9rem;
+            color: #888;
+            margin-top: 10px;
+        }
+
+        /* --- Responsive Adjustments --- */
+        @media (max-width: 992px) {
+            .step {
+                flex: 0 0 calc(50% - 20px);
+                margin-bottom: 50px;
+            }
+
+            .step:not(:last-child)::after {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+            .modal-title {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 100px 0 60px;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .section-padding {
+                padding: 70px 0;
+            }
+
+            .step {
+                flex: 0 0 100%;
+            }
+
+            .features {
+                padding: 50px 20px;
+            }
+
+            .navbar-toggler-icon {
+                color: var(--neutral);
+            }
+            .modal-content {
+                margin: 15px;
+            }
+            .modal-body {
+                padding: 1.5rem;
+            }
+            .btn-schedule-demo {
+                padding: 14px 30px;
+                font-size: 1rem;
+            }
+            .copyright {
+                font-size: 0.85rem;
+            }
+            .developer-credit {
+                font-size: 0.9rem; /* Further reduced for small screens */
+            }
+            .developer-name {
+                font-size: 1rem; /* Further reduced for small screens */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="preloader">
+        <div class="preloader-spinner"></div>
+    </div>
+
+    <canvas id="bg-canvas"></canvas>
+
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"><span class="accent">✦</span> ASTRA</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon">☰</span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#how-it-works">How It Works</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#scheduleDemoModal">Schedule Demo</a></li>
+                    <li class="nav-item ms-2"><a href="#" class="btn nav-btn" data-bs-toggle="modal" data-bs-target="#scheduleDemoModal">Schedule Demo</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div id="content-wrapper">
+        <section class="hero">
+            <div class="container-fluid">
+                <div class="hero-content">
+                    <p class="tagline">ALWAYS ADAPTING, ALWAYS AHEAD</p>
+                    <h1>Your Intelligent Digital Companion</h1>
+                    <p>ASTRA isn't just a MCP server—it's your ever-evolving toolkit that anticipates your needs. Plan trips, manage schedules, automate tasks, and more with your AI-powered assistant.</p>
+                    <a href="#" class="btn btn-astra" data-bs-toggle="modal" data-bs-target="#scheduleDemoModal">Schedule Demo</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="section-padding">
+            <div class="container-fluid">
+                <div class="features">
+                    <h2 class="section-title">Powerful Features</h2>
+                    <p class="lead">ASTRA combines intelligent automation with intuitive functionality to streamline your digital life</p>
+
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">🗺️</div>
+                            <h3 class="feature-title">Trip Planning</h3>
+                            <p>Create detailed day-by-day itineraries that blend weather forecasts with top attractions. Never wonder "where to go today?" again.</p>
+                            <a href="#" class="text-primary">Learn more →</a>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-icon">🌦️</div>
+                            <h3 class="feature-title">Real-Time Weather</h3>
+                            <p>Get comprehensive 5-day forecasts with temperature, humidity, wind, rain/snow predictions, and sunrise/sunset times.</p>
+                            <a href="#" class="text-primary">Learn more →</a>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-icon">📧</div>
+                            <h3 class="feature-title">Email Intelligence</h3>
+                            <p>Automatically scan your Gmail for meetings, interviews, verifications, subscriptions, and deliveries with attachment extraction.</p>
+                            <a href="#" class="text-primary">Learn more →</a>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-icon">🗓️</div>
+                            <h3 class="feature-title">Smart Scheduling</h3>
+                            <p>Automatically schedule tasks and meetings from your inbox and manage your calendar efficiently with intelligent suggestions.</p>
+                            <a href="#" class="text-primary">Learn more →</a>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-icon">✅</div>
+                            <h3 class="feature-title">Task Reminders</h3>
+                            <p>Never miss important todos with intelligent reminders that learn your priorities and adapt to your schedule.</p>
+                            <a href="#" class="text-primary">Learn more →</a>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-icon">📱</div>
+                            <h3 class="feature-title">WhatsApp Integration</h3>
+                            <p>Send messages instantly with click-to-chat URLs from your contacts list. Custom templates make communication effortless.</p>
+                            <a href="#" class="text-primary">Learn more →</a>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-5">
+                        <a href="#" class="btn btn-outline-primary">View All Features</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="how-it-works" class="how-it-works">
+            <div class="container-fluid">
+                <h2 class="section-title">How ASTRA Works</h2>
+                <p class="lead text-light">Integrating ASTRA into your workflow is simple and seamless</p>
+
+                <div class="steps-container">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3>Install</h3>
+                        <p>Install dependencies with pip and configure your environment variables</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3>Run Server</h3>
+                        <p>Start the ASTRA server with a single command in your terminal</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3>Connect</h3>
+                        <p>Add the MCP server URL to Claude Desktop preferences</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <h3>Enjoy</h3>
+                        <p>Access all ASTRA tools directly from your AI assistant</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="get-started" class="cta-section">
+            <div class="container-fluid">
+                <div class="cta-content">
+                    <h2 class="cta-title">Ready to Transform Your Digital Experience?</h2>
+                    <p class="cta-text">Join thousands of users who have enhanced their productivity with ASTRA</p>
+                    <a href="#" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#scheduleDemoModal">Schedule Demo</a>
+                    <p class="mt-4">Free to start • Easy setup • No credit card required</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-4 mb-5 mb-lg-0">
+                    <div class="footer-logo"><span class="accent">✦</span> ASTRA</div>
+                    <p class="footer-subtitle">Your intelligent digital companion for scheduling, travel, routines, and automation.</p>
+                </div>
+
+                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+                    <h5 class="text-light mb-4">Features</h5>
+                    <div class="footer-links">
+                        <a href="#">Trip Planning</a>
+                        <a href="#">Weather Forecast</a>
+                        <a href="#">Email Automation</a>
+                        <a href="#">Task Management</a>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+                    <h5 class="text-light mb-4">Resources</h5>
+                    <div class="footer-links">
+                        <a href="#">Documentation</a>
+                        <a href="#">API Reference</a>
+                        <a href="#">Tutorials</a>
+                        <a href="#">Community</a>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-4">
+                    <h5 class="text-light mb-4">Company</h5>
+                    <div class="footer-links">
+                        <a href="#">About Us</a>
+                        <a href="#">Blog</a>
+                        <a href="#">Careers</a>
+                        <a href="#">Contact</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p>&copy; 2025 ASTRA Project. All rights reserved. Always Adapting, Always Ahead. ✨</p>
+                <p class="developer-credit">Forged with finesse by <span class="developer-name">RamBikkina</span>, the <span class="developer-role">Lead Architect</span>, <span class="developer-role">Developer</span> & <span class="developer-role">Designer</span> behind this digital marvel. Explore more: <a href="https://ramc26.github.io/RamTechSuite" target="_blank" class="portfolio-link">RamTechSuite</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="modal fade" id="scheduleDemoModal" tabindex="-1" aria-labelledby="scheduleDemoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="scheduleDemoModalLabel">Unlock ASTRA's Magic! ✨</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Ready to see ASTRA in action? Fill out the form below and let's schedule a quick, personalized demo just for you! 🚀</p>
+                    <form id="demoForm">
+                        <input type="hidden" name="access_key" id="web3forms_access_key">
+                        <div class="mb-3">
+                            <label for="demoName" class="form-label">Your Name</label>
+                            <input type="text" class="form-control" id="demoName" name="name" required placeholder="E.g., Star-Lord 🌌">
+                        </div>
+                        <div class="mb-3">
+                            <label for="demoEmail" class="form-label">Your Best Email</label>
+                            <input type="email" class="form-control" id="demoEmail" name="email" required placeholder="E.g., rocket@galaxy.com 📧">
+                        </div>
+                        <div class="mb-3">
+                            <label for="demoMessage" class="form-label">Tell Us Your Superpower Needs!</label>
+                            <textarea class="form-control" id="demoMessage" name="message" rows="4" placeholder="What are you hoping ASTRA can automate or simplify for you? We're all ears! 👂"></textarea>
+                        </div>
+                        <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+                        <button type="submit" class="btn btn-schedule-demo">Schedule My Cosmic Demo! 🌟</button>
+                        <div id="result" class="mt-3"></div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <p class="privacy-text">Your data is safe with us, just like in a secure vault.🔒 We respect your privacy.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // --- Preloader Animation (from Design 2 - simpler spinner) ---
+        $(window).on('load', function() {
+            setTimeout(function() {
+                $('.preloader').fadeOut(800);
+            }, 1500);
+        });
+
+        // --- Three.js Background Animation (from Design 1 - with scroll-based zoom) ---
+        let scene, camera, renderer, particles, core;
+        let scrollY = 0;
+        let targetZ = 15; // Initial camera Z position
+
+        function init3D() {
+            const canvas = document.getElementById('bg-canvas');
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setClearColor(0x000000, 0); // Transparent background
+
+            // --- AI Core (TorusKnot from Design 1) ---
+            const coreGeometry = new THREE.TorusKnotGeometry(1.5, 0.4, 100, 16);
+            const coreMaterial = new THREE.MeshBasicMaterial({
+                color: 0x7a00ff, /* Using accent2 for core */
+                wireframe: true,
+                transparent: true,
+                opacity: 0.5
+            });
+            core = new THREE.Mesh(coreGeometry, coreMaterial);
+            scene.add(core);
+
+            // --- Particle System (from Design 1) ---
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particlesCount = 7000;
+            const posArray = new Float32Array(particlesCount * 3);
+
+            for (let i = 0; i < particlesCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 30;
+            }
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 0.015,
+                color: 0x00c6ff, /* Using accent for particles */
+                transparent: true,
+                blending: THREE.AdditiveBlending
+            });
+            particles = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particles);
+
+            camera.position.z = targetZ;
+
+            window.addEventListener('resize', onWindowResize, false);
+            document.addEventListener('scroll', onScroll, false);
+            animate();
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        function onScroll() {
+            scrollY = window.scrollY;
+            // Adjust scroll percentage for the new layout (features section is lighter)
+            const scrollPercent = scrollY / (document.body.scrollHeight - window.innerHeight);
+            // Adjust targetZ to make the zoom less aggressive or tuned to the new content flow
+            targetZ = 15 - (scrollPercent * 10); // Reduced zoom effect
+        }
+
+        const clock = new THREE.Clock();
+        function animate() {
+            requestAnimationFrame(animate);
+            const elapsedTime = clock.getElapsedTime();
+
+            // Animate particles and core
+            particles.rotation.y = elapsedTime * 0.05;
+            core.rotation.x = elapsedTime * 0.1;
+            core.rotation.y = elapsedTime * 0.1;
+            core.rotation.z = elapsedTime * 0.08;
+
+            // Smoothly interpolate camera position
+            camera.position.z += (targetZ - camera.position.z) * 0.05;
+
+            renderer.render(scene, camera);
+        }
+
+        init3D();
+
+        // Smooth scrolling for anchor links (from Design 2)
+        $('a[href^="#"]').on('click', function(e) {
+            // Only prevent default if it's an internal anchor and not a modal trigger
+            if (!$(this).data('bs-toggle')) {
+                e.preventDefault();
+                var target = $(this.getAttribute('href'));
+                if(target.length) {
+                    $('html, body').animate({
+                        scrollTop: target.offset().top - 80 // Adjust for fixed navbar
+                    }, 800);
+                }
+            }
+        });
+
+        // --- Web3Forms Integration for Modal Form ---
+        const demoForm = document.getElementById('demoForm');
+        const demoResult = document.getElementById('result');
+
+        // Dynamically set the Web3Forms access key
+        // IMPORTANT: Replace 'YOUR_WEB3FORMS_ACCESS_KEY_HERE' with your actual key.
+        // For enhanced security in production, consider fetching this key from a secure API endpoint
+        // rather than embedding it directly in client-side JavaScript.
+        document.getElementById('web3forms_access_key').value = 'YOUR_WEB3FORMS_ACCESS_KEY_HERE';
+
+        demoForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            demoResult.innerHTML = "Sending your request... 🚀 Please wait!"; // More engaging message
+
+            const formData = new FormData(demoForm);
+            const object = Object.fromEntries(formData);
+            const json = JSON.stringify(object);
+
+            fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: json
+                })
+                .then(async (response) => {
+                    let jsonResponse = await response.json();
+                    if (response.status === 200) {
+                        demoResult.innerHTML = "Awesome! Your demo request is confirmed. We'll be in touch soon! ✨";
+                        demoResult.style.color = 'var(--accent2)'; // ASTRA's purple for success
+                    } else {
+                        console.log(response);
+                        demoResult.innerHTML = "Uh oh! Something went wrong. Please try again or reach out directly! 😔";
+                        demoResult.style.color = 'red'; // Error color
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                    demoResult.innerHTML = "Network error. Is your internet connected? Please try again! 📡";
+                    demoResult.style.color = 'red'; // Error color
+                })
+                .finally(function() {
+                    demoForm.reset();
+                    setTimeout(() => {
+                        demoResult.innerHTML = ""; // Clear message
+                        $('#scheduleDemoModal').modal('hide'); // Close modal after submission
+                    }, 4000); // Give user more time to read the exciting message
+                });
+        });
+    </script>
+</body>
+</html>
