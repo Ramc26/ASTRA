@@ -1,5 +1,5 @@
 # <center>ASTRA✨ — Always Adapting, Always Ahead</center>
-
+![ASTRA Logo](assets/ASTRA_1.png)
 > ***It isn’t just a*** **MCP server** **— ASTRA** **✨** ***is your ever-evolving toolkit and digital companion.***  
 > Today it…  
 > 
@@ -12,8 +12,6 @@
 > …and ***tomorrow***, it’ll do **even more!** 🎉  
 
 ---
-
-![ASTRA Logo](assets/ASTRA_1.png)
 
 **ASTRA**  
 <small><em>(Assistant for <u>Scheduling</u>, <u>Travel</u>, <u>Routines</u>, and <u>Automation</u>)</em></small>  
