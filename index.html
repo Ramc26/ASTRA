@@ -953,7 +953,11 @@
                     <p>Ready to see ASTRA in action?</p>
                     <p>Fill out the form below and let's schedule a quick, personalized demo just for you! 🚀</p>
                     <form id="demoForm">
-                        <input type="hidden" name="access_key" id="web3forms_access_key">
+                        <input type="hidden" name="access_key" id="web3forms_access_key" value="1d94709e-5923-4d5e-ab5c-a0fa93b8ce41">
+                        <input type="hidden" name="subject" value="ASTRA Demo Request">
+                        <input type="hidden" name="from_name" value="ASTRA Website">
+                        <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+                        
                         <div class="mb-3">
                             <label for="demoName" class="form-label">Your Name</label>
                             <input type="text" class="form-control" id="demoName" name="name" required placeholder="E.g., Star-Lord 🌌">
@@ -966,7 +970,6 @@
                             <label for="demoMessage" class="form-label">Tell Us Your Superpower Needs!</label>
                             <textarea class="form-control" id="demoMessage" name="message" rows="3" placeholder="What are you hoping ASTRA can automate or simplify for you? We're all ears! 👂"></textarea>
                         </div>
-                        <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
                         <button type="submit" class="btn btn-schedule-demo">Schedule Demo!🌟</button>
                         <div id="result" class="mt-3"></div>
                     </form>
@@ -1080,27 +1083,49 @@
             }
         });
 
-        // Form submission handling
+        // Form submission handling with Web3Forms
         const demoForm = document.getElementById('demoForm');
         const demoResult = document.getElementById('result');
-
-        document.getElementById('web3forms_access_key').value = '1d94709e-5923-4d5e-ab5c-a0fa93b8ce41';
 
         demoForm.addEventListener('submit', function(e) {
             e.preventDefault();
             demoResult.innerHTML = "Sending your request... 🚀 Please wait!";
             demoResult.style.color = 'var(--accent)';
 
-            setTimeout(() => {
-                demoResult.innerHTML = "Awesome! Your demo request is confirmed. We'll be in touch soon! ✨";
-                demoResult.style.color = 'var(--accent2)';
-                demoForm.reset();
-                
-                setTimeout(() => {
-                    $('#scheduleDemoModal').modal('hide');
-                    demoResult.innerHTML = "";
-                }, 3000);
-            }, 1500);
+            // Prepare form data
+            const formData = new FormData(demoForm);
+            
+            // Send form data to Web3Forms
+            fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                body: formData
+            })
+            .then(async (response) => {
+                let json = await response.json();
+                if (response.status === 200) {
+                    // Success
+                    demoResult.innerHTML = "Awesome! Your demo request is confirmed. We'll be in touch soon! ✨";
+                    demoResult.style.color = 'var(--accent2)';
+                    demoForm.reset();
+                    
+                    // Close modal after 3 seconds
+                    setTimeout(() => {
+                        $('#scheduleDemoModal').modal('hide');
+                        demoResult.innerHTML = "";
+                    }, 3000);
+                } else {
+                    // Server returned error
+                    console.error(json);
+                    demoResult.innerHTML = "Oops! Something went wrong. Please try again later.";
+                    demoResult.style.color = '#ff4444';
+                }
+            })
+            .catch(error => {
+                // Network error
+                console.error(error);
+                demoResult.innerHTML = "Network error. Please check your connection and try again.";
+                demoResult.style.color = '#ff4444';
+            });
         });
     </script>
 </body>
